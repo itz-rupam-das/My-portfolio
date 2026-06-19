@@ -279,6 +279,56 @@ html.is-app-loading body {
 
   .social-link-title {
     font-size: 0.62rem;
+   }
+}
+
+.hero-name {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.01em;
+}
+
+.hero-name-char {
+  animation-duration: 0.65s;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  display: inline-block;
+  transform-origin: 50% 100%;
+  transition:
+    color 0.25s ease,
+    transform 0.25s ease;
+  will-change: transform;
+}
+
+.hero-name-char:hover {
+  animation-delay: calc(var(--char-index) * 35ms);
+  animation-name: hero-name-wave;
+  color: #d1f82d;
+}
+
+.hero-name-space {
+  min-width: 0.26em;
+}
+
+@keyframes hero-name-wave {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+
+  25% {
+    transform: translate3d(0, -0.32em, 0) rotate(-8deg);
+  }
+
+  55% {
+    transform: translate3d(0, -0.22em, 0) rotate(7deg);
+  }
+
+  78% {
+    transform: translate3d(0, -0.1em, 0) rotate(-4deg);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
   }
 }
 
