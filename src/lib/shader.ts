@@ -19,6 +19,7 @@ export const portraitFragmentShader = /* glsl */ `
   uniform vec2 uImageResolution;
   uniform vec2 uPointer;
   uniform float uHover;
+  uniform float uGrade;
   uniform float uTime;
 
   varying vec2 vUv;
@@ -65,8 +66,20 @@ export const portraitFragmentShader = /* glsl */ `
     float radius = (0.225 + wobble) * uHover;
     float reveal = 1.0 - smoothstep(radius - 0.018, radius + 0.006, length(delta));
 
-    vec4 portrait = mix(color, monochrome, reveal * uHover);
-    portrait.a = mix(color.a, monochrome.a, reveal * uHover);
+    float grade = clamp(uGrade, 0.0, 1.0);
+    float hoverReveal = reveal * uHover;
+    vec4 homePortrait = mix(color, monochrome, hoverReveal);
+
+    // Build the scroll portrait from the original color photograph. The
+    // separately supplied hover texture is intentionally not used here.
+    float luminance = dot(color.rgb, vec3(0.299, 0.587, 0.114));
+    vec3 darkGrayscale = vec3(luminance);
+    darkGrayscale = (darkGrayscale - 0.5) * 1.05 + 0.5;
+    darkGrayscale *= 0.58;
+
+    vec4 portrait = homePortrait;
+    portrait.rgb = mix(homePortrait.rgb, clamp(darkGrayscale, 0.0, 1.0), grade);
+    portrait.a = mix(homePortrait.a, color.a, grade);
     gl_FragColor = portrait;
   }
 `;

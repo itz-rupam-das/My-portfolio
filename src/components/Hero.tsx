@@ -42,8 +42,13 @@ export function Hero() {
       return;
     }
 
+    const cardDecor = Array.from(
+      content.querySelectorAll<Element>(".rainbow-bg, .organic-svg-g"),
+    );
+
     const { gsap, ScrollTrigger } = getGsap();
     section.style.setProperty("--hero-scroll", "0");
+    section.style.setProperty("--portrait-grade", "0");
 
     // 3D Mouse Tracking for portrait (subtle)
     const moveX = gsap.quickTo(portrait, "x", {
@@ -72,7 +77,16 @@ export function Hero() {
       strokeDasharray: pathLength,
       strokeDashoffset: pathLength
     });
-    gsap.set(postText, { opacity: 0, y: "34vh" });
+    const revealCopies = Array.from(
+      postText.querySelectorAll<HTMLElement>("[data-post-copy]"),
+    );
+    const revealBlocks = Array.from(
+      postText.querySelectorAll<HTMLElement>("[data-post-block]"),
+    );
+
+    gsap.set(postText, { opacity: 0, y: "28vh" });
+    gsap.set(revealCopies, { clipPath: "inset(0 100% 0 0)" });
+    gsap.set(revealBlocks, { clipPath: "inset(0 100% 0 0)" });
 
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -91,9 +105,16 @@ export function Hero() {
     tl.to(content, {
       scale: 0.42,
       borderRadius: "18px",
-      filter: "grayscale(1)",
       duration: 1,
       ease: "power2.inOut"
+    }, 0);
+
+    // Grade the WebGL portrait continuously without filtering its parent card.
+    // A CSS filter on a transformed WebGL parent can temporarily blank the canvas.
+    tl.to(section, {
+      "--portrait-grade": 1,
+      duration: 1,
+      ease: "none"
     }, 0);
 
     // Keep the portrait contained as the card shrinks so the head does not clip.
@@ -110,8 +131,15 @@ export function Hero() {
     // Transition background SVG blobs to a subtle neon green
     tl.to(".organic-svg-g", { stroke: "rgba(209, 248, 45, 0.15)", duration: 1 }, 0);
 
-    // Keep part of the light card visible instead of fading it out completely.
-    tl.to(baseBg, { opacity: 0.28, duration: 1 }, 0);
+    // Remove only the card's decorative background as it shrinks. The page-level
+    // organic pattern remains visible behind the card.
+    tl.to(cardDecor, { opacity: 0, duration: 0.55, ease: "none" }, 0);
+    tl.to(baseBg, {
+      backgroundColor: "#8f9484",
+      opacity: 1,
+      duration: 1,
+      ease: "none"
+    }, 0);
 
     // The always-running background marquee belongs only to the initial hero state.
     tl.to(bgMarquee, { opacity: 0, duration: 0.7, ease: "none" }, 0);
@@ -160,19 +188,40 @@ export function Hero() {
       ease: "power2.inOut"
     }, 1.12);
 
-    // Bring the editorial statement in as soon as the card creates enough room.
+    // Wait for the card to clear, then reveal the statement with stepped wipes.
     tl.to(postText, {
       opacity: 1,
       y: "-2vh",
-      duration: 0.52,
+      duration: 0.42,
       ease: "power2.out"
-    }, 1.48);
+    }, 1.94);
+
+    revealCopies.forEach((copy, index) => {
+      const block = revealBlocks[index];
+      const revealAt = 2 + index * 0.14;
+
+      if (!block) {
+        return;
+      }
+
+      tl.to(block, {
+        clipPath: "inset(0 0% 0 0)",
+        duration: 0.2,
+        ease: "power2.inOut"
+      }, revealAt);
+      tl.set(copy, { clipPath: "inset(0 0% 0 0)" }, revealAt + 0.19);
+      tl.to(block, {
+        clipPath: "inset(0 0 0 100%)",
+        duration: 0.28,
+        ease: "power2.inOut"
+      }, revealAt + 0.2);
+    });
 
     tl.to(postText, {
-      y: "-22vh",
-      duration: 1.05,
+      y: "-18vh",
+      duration: 0.72,
       ease: "none"
-    }, 1.78);
+    }, 2.62);
 
     return () => {
       section.removeEventListener("pointermove", onPointerMove);
@@ -180,6 +229,7 @@ export function Hero() {
       moveY(0);
       tl.kill();
       section.style.removeProperty("--hero-scroll");
+      section.style.removeProperty("--portrait-grade");
       ScrollTrigger.refresh();
     };
   }, []);
@@ -247,15 +297,26 @@ export function Hero() {
             ref={postTextRef}
             className="pointer-events-none absolute inset-x-0 bottom-[4vh] z-30 flex justify-center px-4 opacity-0"
           >
-            <h2 className="max-w-375 text-center text-[clamp(3.6rem,8.5vw,9.5rem)] font-black uppercase leading-[0.88] tracking-normal text-[#E6E9DD]">
-              <span className="font-serif font-black text-[#BFD73A]">Redefining</span>{" "}
-              interfaces,
-              <br />
-              building for{" "}
-              <span className="font-serif font-black text-[#BFD73A]">impact</span>,
-              <br />
-              shipping it all in{" "}
-              <span className="font-serif font-black text-[#BFD73A]">code.</span>
+            <h2 className="flex max-w-375 flex-col items-center text-center text-[clamp(3.6rem,8.5vw,9.5rem)] font-black uppercase leading-[0.88] tracking-normal text-[#E6E9DD]">
+              <span data-post-reveal className="relative block w-fit -translate-x-[3vw] overflow-hidden">
+                <span data-post-copy className="block">
+                  <span className="font-serif font-black text-[#BFD73A]">Redefining</span>{" "}
+                  interfaces,
+                </span>
+                <span data-post-block aria-hidden="true" className="absolute inset-0 z-10 bg-[#BFD73A]" />
+              </span>
+              <span data-post-reveal className="relative block w-fit translate-x-[4vw] overflow-hidden">
+                <span data-post-copy className="block">
+                  building for <span className="font-serif font-black text-[#BFD73A]">impact</span>,
+                </span>
+                <span data-post-block aria-hidden="true" className="absolute inset-0 z-10 bg-[#BFD73A]" />
+              </span>
+              <span data-post-reveal className="relative block w-fit -translate-x-[1vw] overflow-hidden">
+                <span data-post-copy className="block">
+                  shipping it all in <span className="font-serif font-black text-[#BFD73A]">code.</span>
+                </span>
+                <span data-post-block aria-hidden="true" className="absolute inset-0 z-10 bg-[#BFD73A]" />
+              </span>
             </h2>
           </div>
 

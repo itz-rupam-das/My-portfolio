@@ -54,6 +54,8 @@ export function WebGLCanvas({
       return;
     }
 
+    const gradeSource = host.closest("section") as HTMLElement | null;
+
     let disposed = false;
     let frame = 0;
     const pointer = { x: 0.5, y: 0.5 };
@@ -118,6 +120,7 @@ export function WebGLCanvas({
           uImageResolution: { value: [color.width, color.height] },
           uPointer: { value: [pointer.x, pointer.y] },
           uHover: { value: 0 },
+          uGrade: { value: 0 },
           uTime: { value: 0 },
         },
         transparent: true,
@@ -132,9 +135,13 @@ export function WebGLCanvas({
         }
 
         hoverAmount += (hoverTarget - hoverAmount) * 0.12;
+        const grade = Number.parseFloat(
+          gradeSource?.style.getPropertyValue("--portrait-grade") || "0",
+        );
         program.uniforms.uResolution.value = [gl.canvas.width, gl.canvas.height];
         program.uniforms.uPointer.value = [pointer.x, pointer.y];
         program.uniforms.uHover.value = hoverAmount;
+        program.uniforms.uGrade.value = Number.isFinite(grade) ? grade : 0;
         program.uniforms.uTime.value = (performance.now() - startedAt) / 1000;
 
         renderer.render({ scene: mesh });
