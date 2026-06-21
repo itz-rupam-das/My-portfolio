@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Geist, Geist_Mono, Permanent_Marker } from "next/font/google";
-import { AppLoader } from "@/components/AppLoader";
+import { AppLoader } from "@/components/ui/AppLoader";
+import { SITE } from "@/lib/constants";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -21,8 +22,8 @@ const permanentMarker = Permanent_Marker({
 });
 
 export const metadata: Metadata = {
-  title: "Portfolio",
-  description: "Interactive portfolio hero for Rupam Das.",
+  title: SITE.title,
+  description: SITE.description,
 };
 
 export default function RootLayout({

@@ -13,3 +13,5 @@ export function getGsap() {
 
   return { gsap, ScrollTrigger };
 }
+
+export type GsapTools = ReturnType<typeof getGsap>;

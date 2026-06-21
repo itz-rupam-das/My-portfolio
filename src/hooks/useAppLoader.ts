@@ -1,18 +1,15 @@
 "use client";
 
-import { type ReactNode, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { LOADER } from "@/lib/constants";
 
-type AppLoaderProps = {
-  children: ReactNode;
-};
-
-export function AppLoader({ children }: AppLoaderProps) {
+export function useAppLoader() {
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    let timeout: number | undefined;
     const root = document.documentElement;
     const previousScrollBehavior = root.style.scrollBehavior;
+    let timeout: number | undefined;
 
     if ("scrollRestoration" in window.history) {
       window.history.scrollRestoration = "manual";
@@ -24,18 +21,17 @@ export function AppLoader({ children }: AppLoaderProps) {
 
     const firstFrame = window.requestAnimationFrame(() => {
       window.scrollTo(0, 0);
-
       timeout = window.setTimeout(() => {
         window.scrollTo(0, 0);
         root.classList.remove("is-app-loading");
         root.style.scrollBehavior = previousScrollBehavior;
         setIsReady(true);
-      }, 2100);
+      }, LOADER.durationMs);
     });
 
     return () => {
       window.cancelAnimationFrame(firstFrame);
-      if (timeout) {
+      if (timeout !== undefined) {
         window.clearTimeout(timeout);
       }
       root.classList.remove("is-app-loading");
@@ -43,23 +39,5 @@ export function AppLoader({ children }: AppLoaderProps) {
     };
   }, []);
 
-  return (
-    <>
-      <div
-        className={`fixed inset-0 z-[9999] grid place-items-center bg-[#1F221A] transition-opacity duration-500 ${
-          isReady ? "pointer-events-none opacity-0" : "opacity-100"
-        }`}
-      >
-        <div className="text-center">
-          <div className="loader-name-type permanent-marker-regular" data-text="RUPAM DAS">
-            RUPAM DAS
-          </div>
-          <div className="mt-4 text-[10px] font-semibold uppercase tracking-[0.45em] text-[#D1F82D]">
-            Loading Portfolio
-          </div>
-        </div>
-      </div>
-      {isReady ? <div>{children}</div> : null}
-    </>
-  );
+  return isReady;
 }

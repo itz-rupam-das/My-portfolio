@@ -1,0 +1,60 @@
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: "Geist", "Geist Fallback", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", "Geist Mono Fallback", ui-monospace, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "Geist", "Geist Fallback", ui-sans-serif, system-ui, sans-serif;
+}
+
+html.is-app-loading,
+html.is-app-loading body {
+  overflow: hidden;
+}
+
+::selection {
+  background: #111111;
+  color: #ffffff;
+}
+
+.permanent-marker-regular {
+  font-family: var(--font-permanent-marker), cursive;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.loader-name-type {
+  color: rgb(255 255 255 / 16%);
+  display: inline-block;
+  font-size: clamp(3rem, 6vw, 4.5rem);
+  line-height: 1;
+  position: relative;
+  white-space: nowrap;
+}
+
+.loader-name-type::before {
+  clip-path: inset(0 100% 0 0);
+  color: #ffffff;
+  content: attr(data-text);
+  inset: 0;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+}

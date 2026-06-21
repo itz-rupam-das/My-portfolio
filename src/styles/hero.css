@@ -1,0 +1,67 @@
+.hero-name {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.01em;
+}
+
+.hero-name-char {
+  display: inline-block;
+  transform-origin: 50% 100%;
+  transition:
+    color 0.25s ease,
+    transform 0.25s ease;
+  will-change: transform;
+}
+
+.hero-name-space {
+  min-width: 0.26em;
+}
+
+.hero-marquee-item {
+  flex: 0 0 auto;
+  padding-right: 0.38em;
+}
+
+.rainbow-bg {
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  z-index: -10;
+}
+
+.rainbow-bg-streak {
+  animation-delay: var(--rainbow-delay);
+  box-shadow:
+    -130px 0 80px 40px rgb(255 255 255 / 78%),
+    -50px 0 50px 25px var(--rainbow-one),
+    0 0 50px 25px var(--rainbow-two),
+    50px 0 50px 25px var(--rainbow-three),
+    130px 0 80px 40px rgb(255 255 255 / 78%);
+  height: 115vh;
+  position: absolute;
+  top: -6vh;
+  transform: rotate(10deg);
+  transform-origin: top right;
+  width: 0;
+}
+
+.rainbow-bg-haze-x {
+  background: rgb(255 255 255 / 72%);
+  bottom: 0;
+  box-shadow: 0 0 50vh 40vh rgb(255 255 255 / 78%);
+  height: 0;
+  left: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.rainbow-bg-haze-y {
+  background: rgb(255 255 255 / 64%);
+  bottom: 0;
+  box-shadow: 0 0 35vw 25vw rgb(255 255 255 / 72%);
+  height: 100%;
+  left: 0;
+  position: absolute;
+  width: 0;
+}
