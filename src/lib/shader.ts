@@ -20,6 +20,7 @@ export const portraitFragmentShader = /* glsl */ `
   uniform vec2 uPointer;
   uniform float uHover;
   uniform float uGrade;
+  uniform float uScroll;
   uniform float uTime;
 
   varying vec2 vUv;
@@ -67,7 +68,8 @@ export const portraitFragmentShader = /* glsl */ `
     float reveal = 1.0 - smoothstep(radius - 0.018, radius + 0.006, length(delta));
 
     float grade = clamp(uGrade, 0.0, 1.0);
-    float hoverReveal = reveal * uHover;
+    float hoverAvailability = 1.0 - clamp(uScroll, 0.0, 1.0);
+    float hoverReveal = reveal * uHover * hoverAvailability;
     vec4 homePortrait = mix(color, monochrome, hoverReveal);
 
     // Build the scroll portrait from the original color photograph. The

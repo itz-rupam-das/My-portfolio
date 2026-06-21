@@ -61,6 +61,7 @@ export function WebGLCanvas({
     const pointer = { x: 0.5, y: 0.5 };
     let hoverTarget = 0;
     let hoverAmount = 0;
+    let scrollFade = 0;
 
     const renderer = new Renderer({
       alpha: true,
@@ -121,6 +122,7 @@ export function WebGLCanvas({
           uPointer: { value: [pointer.x, pointer.y] },
           uHover: { value: 0 },
           uGrade: { value: 0 },
+          uScroll: { value: 0 },
           uTime: { value: 0 },
         },
         transparent: true,
@@ -138,10 +140,16 @@ export function WebGLCanvas({
         const grade = Number.parseFloat(
           gradeSource?.style.getPropertyValue("--portrait-grade") || "0",
         );
+        const scroll = Number.parseFloat(
+          gradeSource?.style.getPropertyValue("--hero-scroll") || "0",
+        );
+        const scrollFadeTarget = Number.isFinite(scroll) && scroll > 0.0001 ? 1 : 0;
+        scrollFade += (scrollFadeTarget - scrollFade) * 0.2;
         program.uniforms.uResolution.value = [gl.canvas.width, gl.canvas.height];
         program.uniforms.uPointer.value = [pointer.x, pointer.y];
         program.uniforms.uHover.value = hoverAmount;
         program.uniforms.uGrade.value = Number.isFinite(grade) ? grade : 0;
+        program.uniforms.uScroll.value = scrollFade;
         program.uniforms.uTime.value = (performance.now() - startedAt) / 1000;
 
         renderer.render({ scene: mesh });
