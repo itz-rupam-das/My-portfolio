@@ -10,6 +10,7 @@ import {
 
 type WebGLCanvasProps = {
   colorSrc: string;
+  monochromeSrc: string;
 };
 
 function loadTexture(gl: OGLRenderingContext, src: string) {
@@ -42,6 +43,7 @@ function loadTexture(gl: OGLRenderingContext, src: string) {
 
 export function WebGLCanvas({
   colorSrc,
+  monochromeSrc,
 }: WebGLCanvasProps) {
   const hostRef = useRef<HTMLDivElement>(null);
 
@@ -54,6 +56,9 @@ export function WebGLCanvas({
 
     let disposed = false;
     let frame = 0;
+    const pointer = { x: 0.5, y: 0.5 };
+    let hoverTarget = 0;
+    let hoverAmount = 0;
 
     const renderer = new Renderer({
       alpha: true,
@@ -73,7 +78,21 @@ export function WebGLCanvas({
     observer.observe(host);
     resize();
 
-    loadTexture(gl, colorSrc).then((color) => {
+    const onPointerMove = (event: PointerEvent) => {
+      const rect = host.getBoundingClientRect();
+      pointer.x = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+      pointer.y = Math.min(1, Math.max(0, 1 - (event.clientY - rect.top) / rect.height));
+      hoverTarget = 1;
+    };
+
+    const onPointerLeave = () => {
+      hoverTarget = 0;
+    };
+
+    host.addEventListener("pointermove", onPointerMove, { passive: true });
+    host.addEventListener("pointerleave", onPointerLeave);
+
+    Promise.all([loadTexture(gl, colorSrc), loadTexture(gl, monochromeSrc)]).then(([color, monochrome]) => {
       if (disposed) {
         return;
       }
@@ -94,20 +113,29 @@ export function WebGLCanvas({
         fragment: portraitFragmentShader,
         uniforms: {
           uColor: { value: color.texture },
+          uMonochrome: { value: monochrome.texture },
           uResolution: { value: [gl.canvas.width, gl.canvas.height] },
           uImageResolution: { value: [color.width, color.height] },
+          uPointer: { value: [pointer.x, pointer.y] },
+          uHover: { value: 0 },
+          uTime: { value: 0 },
         },
         transparent: true,
       });
 
       const mesh = new Mesh(gl, { geometry, program });
+      const startedAt = performance.now();
 
       const render = () => {
         if (disposed) {
           return;
         }
 
+        hoverAmount += (hoverTarget - hoverAmount) * 0.12;
         program.uniforms.uResolution.value = [gl.canvas.width, gl.canvas.height];
+        program.uniforms.uPointer.value = [pointer.x, pointer.y];
+        program.uniforms.uHover.value = hoverAmount;
+        program.uniforms.uTime.value = (performance.now() - startedAt) / 1000;
 
         renderer.render({ scene: mesh });
 
@@ -115,16 +143,20 @@ export function WebGLCanvas({
       };
 
       frame = requestAnimationFrame(render);
+    }).catch((error: unknown) => {
+      console.error("Unable to load portrait textures.", error);
     });
 
     return () => {
       disposed = true;
       cancelAnimationFrame(frame);
       observer.disconnect();
+      host.removeEventListener("pointermove", onPointerMove);
+      host.removeEventListener("pointerleave", onPointerLeave);
       gl.getExtension("WEBGL_lose_context")?.loseContext();
       gl.canvas.remove();
     };
-  }, [colorSrc]);
+  }, [colorSrc, monochromeSrc]);
 
   return (
     <div

@@ -285,6 +285,7 @@ export function Hero() {
               >
                 <PortraitReveal
                   colorSrc="/me-color.png"
+                  monochromeSrc="/me-bw.png"
                 />
               </div>
             </div>

@@ -14,8 +14,12 @@ export const portraitFragmentShader = /* glsl */ `
   precision highp float;
 
   uniform sampler2D uColor;
+  uniform sampler2D uMonochrome;
   uniform vec2 uResolution;
   uniform vec2 uImageResolution;
+  uniform vec2 uPointer;
+  uniform float uHover;
+  uniform float uTime;
 
   varying vec2 vUv;
 
@@ -45,6 +49,24 @@ export const portraitFragmentShader = /* glsl */ `
       discard;
     }
 
-    gl_FragColor = texture2D(uColor, imageUv);
+    vec4 color = texture2D(uColor, imageUv);
+    vec4 monochrome = texture2D(uMonochrome, imageUv);
+
+    // Measure in screen-corrected coordinates so the reveal stays blob-shaped
+    // instead of stretching with the portrait canvas.
+    vec2 delta = vUv - uPointer;
+    delta.x *= uResolution.x / uResolution.y;
+
+    float angle = atan(delta.y, delta.x);
+    float wobble =
+      sin(angle * 3.0 + uTime * 2.6) * 0.016 +
+      sin(angle * 5.0 - uTime * 2.0) * 0.011 +
+      sin(angle * 7.0 + uTime * 1.45) * 0.006;
+    float radius = (0.225 + wobble) * uHover;
+    float reveal = 1.0 - smoothstep(radius - 0.018, radius + 0.006, length(delta));
+
+    vec4 portrait = mix(color, monochrome, reveal * uHover);
+    portrait.a = mix(color.a, monochrome.a, reveal * uHover);
+    gl_FragColor = portrait;
   }
 `;
