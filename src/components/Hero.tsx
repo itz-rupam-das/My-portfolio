@@ -84,7 +84,7 @@ export function Hero() {
       postText.querySelectorAll<HTMLElement>("[data-post-block]"),
     );
 
-    gsap.set(postText, { opacity: 0, y: "28vh" });
+    gsap.set(postText, { opacity: 0, y: "18vh" });
     gsap.set(revealCopies, { clipPath: "inset(0 100% 0 0)" });
     gsap.set(revealBlocks, { clipPath: "inset(0 100% 0 0)" });
 
@@ -188,17 +188,17 @@ export function Hero() {
       ease: "power2.inOut"
     }, 1.12);
 
-    // Wait for the card to clear, then reveal the statement with stepped wipes.
+    // Begin during the card's final exit so the sequence has no dead scroll gap.
     tl.to(postText, {
       opacity: 1,
       y: "-2vh",
-      duration: 0.42,
+      duration: 0.36,
       ease: "power2.out"
-    }, 1.94);
+    }, 1.5);
 
     revealCopies.forEach((copy, index) => {
       const block = revealBlocks[index];
-      const revealAt = 2 + index * 0.14;
+      const revealAt = 1.56 + index * 0.11;
 
       if (!block) {
         return;
@@ -206,22 +206,22 @@ export function Hero() {
 
       tl.to(block, {
         clipPath: "inset(0 0% 0 0)",
-        duration: 0.2,
+        duration: 0.16,
         ease: "power2.inOut"
       }, revealAt);
-      tl.set(copy, { clipPath: "inset(0 0% 0 0)" }, revealAt + 0.19);
+      tl.set(copy, { clipPath: "inset(0 0% 0 0)" }, revealAt + 0.15);
       tl.to(block, {
         clipPath: "inset(0 0 0 100%)",
-        duration: 0.28,
+        duration: 0.22,
         ease: "power2.inOut"
-      }, revealAt + 0.2);
+      }, revealAt + 0.16);
     });
 
     tl.to(postText, {
       y: "-18vh",
-      duration: 0.72,
+      duration: 0.6,
       ease: "none"
-    }, 2.62);
+    }, 2.12);
 
     return () => {
       section.removeEventListener("pointermove", onPointerMove);
