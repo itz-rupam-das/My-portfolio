@@ -9,8 +9,8 @@ export const HERO = {
   hoverPortrait: "/me-bw.png",
   marqueeText: "FULL STACK DEVELOPER",
   marqueeItems: 8,
-  scrollDistance: 3000,
-  scrollHeightClass: "h-[400vh]",
+  scrollDistance: 7500,
+  scrollHeightClass: "h-[780vh]",
 } as const;
 
 export const HERO_COLORS = {
@@ -32,7 +32,7 @@ export const HERO_TIMING = {
   lineStagger: 0.11,
   lineCoverDuration: 0.16,
   lineUncoverDuration: 0.22,
-  revealTravelAt: 2.12,
+  revealTravelAt: 3.15,
   revealTravelDuration: 0.6,
   headerAt: 0.2,
   headerDuration: 0.5,
@@ -53,8 +53,8 @@ export const HERO_MOTION = {
   signatureScale: 0.78,
   exitY: "-100vh",
   revealStartY: "18vh",
-  revealEnterY: "-2vh",
-  revealExitY: "-18vh",
+  revealEnterY: "6vh",
+  revealExitY: "-10vh",
   signatureDashLength: 1794.412,
 } as const;
 

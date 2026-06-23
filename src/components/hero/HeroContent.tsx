@@ -14,7 +14,7 @@ type HeroContentProps = {
 
 export function HeroContent({ refs }: HeroContentProps) {
   return (
-    <main className="overflow-hidden bg-[#1F221A] text-neutral-950">
+    <div className="overflow-hidden bg-[#1F221A] text-neutral-950">
       <section
         ref={refs.section}
         className={`relative bg-[#1F221A] ${HERO.scrollHeightClass}`}
@@ -60,6 +60,6 @@ export function HeroContent({ refs }: HeroContentProps) {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 }
