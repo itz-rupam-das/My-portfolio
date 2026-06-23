@@ -2,8 +2,8 @@
 
 export function HeroFollowupSection() {
   return (
-    <section className="relative bg-[#141910] px-4 pb-4 sm:px-6 sm:pb-6">
-      <div className="mx-auto max-w-[1400px] overflow-hidden rounded-[28px] border border-[#2d3723] bg-[#1a2015] shadow-[0_30px_80px_rgba(0,0,0,0.28)]">
+    <section className="relative bg-[#141910] px-4 pt-18 pb-4 sm:px-6 sm:pt-26 sm:pb-6">
+       <div className="mx-auto max-w-[1400px] overflow-hidden rounded-[28px] border border-[#2d3723] bg-[#1a2015] shadow-[0_30px_80px_rgba(0,0,0,0.28)]">
         <div className="grid min-h-[78vh] items-end gap-0 lg:grid-cols-[1.15fr_0.85fr]">
           <div className="relative min-h-[52vh] overflow-hidden">
             <img
