@@ -37,6 +37,6 @@ export function HeroHeader({ nameRef, socialRef }: HeroHeaderProps) {
       >
         <SocialLinks />
       </div>
-    </>,
+    </>
   );
 }
