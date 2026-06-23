@@ -45,8 +45,18 @@
   animation-timing-function: linear;
 }
 
-.followup-lines {
-  animation: followup-grid-drift 18s linear infinite;
+.card-checker-tile {
+  background: rgba(255, 255, 255, 0.62);
+  border-right: 1px solid rgba(114, 118, 96, 0.09);
+  border-bottom: 1px solid rgba(114, 118, 96, 0.09);
+  pointer-events: auto;
+  transition:
+    background-color 180ms ease,
+    opacity 180ms ease;
+}
+
+.card-checker-tile:hover {
+  background: rgba(255, 255, 255, 0);
 }
 
 @keyframes loader-signature-draw {
@@ -135,11 +145,3 @@
   }
 }
 
-@keyframes followup-grid-drift {
-  0% {
-    background-position: top right, 0 0, 0 0;
-  }
-  100% {
-    background-position: top right, 72px 36px, 36px 72px;
-  }
-}

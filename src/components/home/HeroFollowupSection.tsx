@@ -7,6 +7,7 @@ import { useGsapContext } from "@/hooks/useGsapContext";
 const HIDDEN_CLIP = "inset(0 100% 0 0)";
 const VISIBLE_CLIP = "inset(0 0% 0 0)";
 const EXIT_CLIP = "inset(0 0 0 100%)";
+const CHECKER_TILES = Array.from({ length: 100 }, (_, index) => index);
 
 export function HeroFollowupSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -65,15 +66,24 @@ export function HeroFollowupSection() {
           </div>
 
           <div
-            className="followup-lines relative flex h-full flex-col justify-between bg-[#f2eee3] p-8 text-[#262b20] sm:p-10 lg:p-12"
+            className="relative flex h-full flex-col justify-between bg-[#f2eee3] p-8 text-[#262b20] sm:p-10 lg:p-12"
             style={{
               backgroundImage:
-                "radial-gradient(circle at top right, rgba(189, 202, 92, 0.14), transparent 24%), linear-gradient(rgba(114, 118, 96, 0.18) 1px, transparent 1px), linear-gradient(90deg, rgba(114, 118, 96, 0.18) 1px, transparent 1px)",
-              backgroundPosition: "top right, 0 0, 0 0",
-              backgroundSize: "auto, 72px 72px, 72px 72px",
+                "radial-gradient(circle at top right, rgba(189, 202, 92, 0.16), transparent 24%), linear-gradient(rgba(114, 118, 96, 0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(114, 118, 96, 0.15) 1px, transparent 1px), linear-gradient(135deg, rgba(189, 202, 92, 0.09), rgba(242, 238, 227, 0) 42%)",
+              backgroundPosition: "top right, 0 0, 0 0, center",
+              backgroundSize: "auto, 72px 72px, 72px 72px, auto",
             }}
           >
-            <div className="space-y-5">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 z-0 grid grid-cols-10 grid-rows-10"
+            >
+              {CHECKER_TILES.map((tile) => (
+                <span className="card-checker-tile" key={tile} />
+              ))}
+            </div>
+
+            <div className="relative z-10 space-y-5">
               <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[#6d7438]">
                 Full Stack Developer
               </p>
@@ -99,7 +109,7 @@ export function HeroFollowupSection() {
               </p>
             </div>
 
-            <div className="mt-10 flex items-center gap-4">
+            <div className="relative z-10 mt-10 flex items-center gap-4">
               <div className="h-3 w-3 rounded-full bg-[#c8ef2f]" />
               <p className="text-sm uppercase tracking-[0.28em] text-[#686d60]">
                 Shipping end-to-end experiences with clean code
