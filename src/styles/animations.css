@@ -45,6 +45,10 @@
   animation-timing-function: linear;
 }
 
+.followup-lines {
+  animation: followup-grid-drift 18s linear infinite;
+}
+
 @keyframes loader-signature-draw {
   0%,
   100% {
@@ -128,5 +132,14 @@
   }
   to {
     right: 125vw;
+  }
+}
+
+@keyframes followup-grid-drift {
+  0% {
+    background-position: top right, 0 0, 0 0;
+  }
+  100% {
+    background-position: top right, 72px 36px, 36px 72px;
   }
 }
