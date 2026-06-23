@@ -13,7 +13,7 @@ export function HeroHeader({ nameRef, socialRef }: HeroHeaderProps) {
     <>
       <div
         ref={nameRef}
-        className="permanent-marker-regular absolute left-5 top-5 z-[120] text-4xl text-neutral-900 transition-colors sm:text-5xl"
+        className="permanent-marker-regular fixed left-5 top-5 z-[1000] text-4xl text-neutral-900 transition-colors sm:text-5xl"
       >
         <span className="hero-name" aria-label={SITE.name}>
           {Array.from(SITE.name).map((character, index) => {
@@ -33,10 +33,10 @@ export function HeroHeader({ nameRef, socialRef }: HeroHeaderProps) {
       </div>
       <div
         ref={socialRef}
-        className="absolute right-5 top-5 z-[120] text-neutral-900 transition-colors sm:right-8 sm:top-8"
+        className="fixed right-5 top-5 z-[1000] text-neutral-900 transition-colors sm:right-8 sm:top-8"
       >
         <SocialLinks />
       </div>
-    </>
+    </>,
   );
 }

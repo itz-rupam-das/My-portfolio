@@ -1,6 +1,5 @@
 import { OrganicSvgBackground } from "@/components/background/OrganicSvgBackground";
 import { RainbowBackground } from "@/components/background/RainbowBackground";
-import { HeroHeader } from "@/components/hero/HeroHeader";
 import { HeroMarquee } from "@/components/hero/HeroMarquee";
 import { HeroPortrait } from "@/components/hero/HeroPortrait";
 import { HeroReveal } from "@/components/hero/HeroReveal";
@@ -37,7 +36,6 @@ export function HeroContent({ refs }: HeroContentProps) {
             pathRef={refs.signaturePath}
             wrapperRef={refs.signature}
           />
-          <HeroHeader nameRef={refs.headerName} socialRef={refs.headerSocial} />
           <HeroReveal revealRef={refs.reveal} />
 
           <div
