@@ -9,18 +9,29 @@ export function HeroReveal({ revealRef }: HeroRevealProps) {
   return (
     <div
       ref={revealRef}
-      className="pointer-events-none absolute inset-x-0 bottom-[-4vh] z-30 flex justify-center px-4 opacity-0"
+      className="pointer-events-none absolute inset-x-0 bottom-[19vh] z-30 flex justify-center px-4 opacity-0"
     >
-      <h2 className="flex max-w-375 flex-col items-center text-center text-[clamp(3.6rem,8.5vw,9.5rem)] font-black uppercase leading-[0.88] tracking-normal text-[#E6E9DD]">
-        <HeroRevealLine offsetClass="-translate-x-[3vw]">
-          <span className="font-serif text-[#BFD73A]">Redefining</span>{" "}
-          interfaces,
+      <h2 className="flex max-w-[18ch] flex-col items-center text-center text-[clamp(2.5rem,6.1vw,6.6rem)] font-black uppercase leading-[0.88] tracking-[-0.03em] text-[#E6E9DD]">
+        <HeroRevealLine offsetClass="">
+          <span className="font-serif text-[#BFD73A]">Redefining</span> products,
         </HeroRevealLine>
-        <HeroRevealLine offsetClass="translate-x-[4vw]">
-          building for <span className="font-serif text-[#BFD73A]">impact</span>,
+        <HeroRevealLine offsetClass="">
+          building for <span className="font-serif text-[#BFD73A]">users</span>,
         </HeroRevealLine>
-        <HeroRevealLine offsetClass="-translate-x-[1vw]">
-          shipping it all in <span className="font-serif text-[#BFD73A]">code.</span>
+        <HeroRevealLine offsetClass="">
+          shipping ideas into
+        </HeroRevealLine>
+        <HeroRevealLine offsetClass="">
+          real apps. defining a
+        </HeroRevealLine>
+        <HeroRevealLine offsetClass="">
+          <span className="font-serif text-[#BFD73A]">system</span> in code and
+        </HeroRevealLine>
+        <HeroRevealLine offsetClass="">
+          across the product
+        </HeroRevealLine>
+        <HeroRevealLine offsetClass="">
+          stack.
         </HeroRevealLine>
       </h2>
     </div>
