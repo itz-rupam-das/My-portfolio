@@ -9,7 +9,7 @@ export function HeroReveal({ revealRef }: HeroRevealProps) {
   return (
     <div
       ref={revealRef}
-      className="pointer-events-none absolute inset-x-0 bottom-[19vh] z-30 flex justify-center px-4 opacity-0"
+      className="pointer-events-none absolute inset-x-0 bottom-[11vh] z-30 flex justify-center px-4 opacity-0"
     >
       <h2 className="flex max-w-[18ch] flex-col items-center text-center text-[clamp(2.5rem,6.1vw,6.6rem)] font-black uppercase leading-[0.88] tracking-[-0.03em] text-[#E6E9DD]">
         <HeroRevealLine offsetClass="">
