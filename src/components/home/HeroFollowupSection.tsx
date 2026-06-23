@@ -7,8 +7,8 @@ export function HeroFollowupSection() {
         <div className="grid min-h-[78vh] items-end gap-0 lg:grid-cols-[1.15fr_0.85fr]">
           <div className="relative min-h-[52vh] overflow-hidden">
             <img
-              src="/me-color.png"
-              alt="Rupam Das portrait"
+              src="/img1.jpeg"
+              alt="Rupam Das working as a full stack developer"
               className="h-full w-full object-cover object-center"
             />
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#141910] via-transparent to-transparent" />
@@ -17,21 +17,21 @@ export function HeroFollowupSection() {
           <div className="flex h-full flex-col justify-between bg-[#10150d] p-8 text-[#E6E9DD] sm:p-10 lg:p-12">
             <div className="space-y-5">
               <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[#BFD73A]">
-                Below The Reveal
+                Full Stack Developer
               </p>
               <h2 className="max-w-[12ch] text-[clamp(2.8rem,5.4vw,5.5rem)] font-black uppercase leading-[0.9] tracking-[-0.04em]">
-                A real section now sits under the hero text.
+                Building polished products from backend to frontend.
               </h2>
               <p className="max-w-[36ch] text-base leading-7 text-[#B8BDAF] sm:text-lg">
-                This replaces the empty block after the reveal with an actual follow-up
-                section, so the hero flows into content instead of dead space.
+                I design scalable APIs, build responsive interfaces, and connect the
+                full product flow so ideas move cleanly from concept to production.
               </p>
             </div>
 
             <div className="mt-10 flex items-center gap-4">
               <div className="h-3 w-3 rounded-full bg-[#BFD73A]" />
               <p className="text-sm uppercase tracking-[0.28em] text-[#909781]">
-                Scroll continues into the next story block
+                Shipping end-to-end experiences with clean code
               </p>
             </div>
           </div>

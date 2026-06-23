@@ -40,21 +40,76 @@ html.is-app-loading body {
   font-weight: 400;
 }
 
-.loader-name-type {
-  color: rgb(255 255 255 / 16%);
-  display: inline-block;
-  font-size: clamp(3rem, 6vw, 4.5rem);
-  line-height: 1;
-  position: relative;
-  white-space: nowrap;
+.loader-shell {
+  background:
+    radial-gradient(circle at top, rgb(209 248 45 / 0.08), transparent 34%),
+    radial-gradient(circle at 15% 20%, rgb(190 214 67 / 0.16), transparent 18%),
+    radial-gradient(circle at 82% 24%, rgb(124 156 222 / 0.12), transparent 18%),
+    linear-gradient(180deg, #11150d 0%, #171c12 45%, #0d110b 100%);
 }
 
-.loader-name-type::before {
-  clip-path: inset(0 100% 0 0);
-  color: #ffffff;
-  content: attr(data-text);
-  inset: 0;
-  overflow: hidden;
+.loader-grid {
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.04) 1px, transparent 1px);
+  background-position: center;
+  background-size: 72px 72px;
+  mask-image: radial-gradient(circle at center, black 35%, transparent 85%);
+}
+
+.loader-panel {
+  background:
+    linear-gradient(180deg, rgb(20 26 15 / 0.9), rgb(12 16 10 / 0.74)),
+    rgb(16 21 13 / 0.72);
+}
+
+.loader-orb {
+  border-radius: 9999px;
+  filter: blur(12px);
+  pointer-events: none;
   position: absolute;
-  white-space: nowrap;
+}
+
+.loader-orb-left {
+  background: rgb(209 248 45 / 0.16);
+  height: 24rem;
+  left: -6rem;
+  top: 14%;
+  width: 24rem;
+}
+
+.loader-orb-right {
+  background: rgb(84 118 255 / 0.12);
+  height: 18rem;
+  right: -3rem;
+  top: 12%;
+  width: 18rem;
+}
+
+.loader-signature {
+  filter: drop-shadow(0 0 18px rgb(209 248 45 / 0.2));
+}
+
+.loader-kicker {
+  text-shadow: 0 0 16px rgb(209 248 45 / 0.18);
+}
+
+.loader-progress {
+  background: rgb(255 255 255 / 0.08);
+  border-radius: 9999px;
+  height: 4px;
+  margin-inline: auto;
+  max-width: 12rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.loader-progress-bar {
+  background: linear-gradient(90deg, #7c9220 0%, #d1f82d 52%, #f6ffbe 100%);
+  border-radius: inherit;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
 }

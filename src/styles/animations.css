@@ -1,5 +1,14 @@
-.loader-name-type::before {
-  animation: loader-name-scan 2s infinite linear;
+.loader-signature-path {
+  animation: loader-signature-draw 2.15s ease-in-out infinite;
+}
+
+.loader-progress-bar {
+  animation: loader-progress-sweep 2.1s ease-in-out infinite;
+  transform-origin: left center;
+}
+
+.loader-panel {
+  animation: loader-panel-float 2.8s ease-in-out infinite;
 }
 
 .hero-name-char {
@@ -36,15 +45,44 @@
   animation-timing-function: linear;
 }
 
-@keyframes loader-name-scan {
+@keyframes loader-signature-draw {
   0%,
   100% {
-    clip-path: inset(0 100% 0 0);
+    opacity: 0.2;
+    stroke-dashoffset: var(--loader-signature-length, 1794.412);
   }
+  15% {
+    opacity: 0.45;
+  }
+  55% {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+  75% {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+}
 
-  40%,
-  60% {
-    clip-path: inset(0 0 0 0);
+@keyframes loader-progress-sweep {
+  0% {
+    transform: scaleX(0.08);
+  }
+  55% {
+    transform: scaleX(1);
+  }
+  100% {
+    transform: scaleX(0.18);
+  }
+}
+
+@keyframes loader-panel-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -8px, 0);
   }
 }
 
